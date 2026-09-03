@@ -6,6 +6,13 @@ The player entity, it has a soul and a body, the body controls what the body can
 
 > All the scripts in this scene have all the Global autoloads available
 
+Signals:
+- player_pick_item
+- player_drop_item
+- player_use_item
+
+> all signals actions are responsibility of the body
+
 ## Player parts and responsibilities
 
 ### Body
@@ -27,7 +34,9 @@ moves the player itself throught move and slide with vectors and velocity values
 - _on_soul_player_pick_item(_nodeUnderMouse):
 takes the item selected throught _nodeUnderMouse, removes it from tree scene, adds it as child node of Player scene and tells said item that it has been picked
 - _on_soul_player_use_item():
-**To be implemented**
+calls the activateItem function of the holding item
+- _on_soul_player_drop_item():
+if holding an item, it drops it, otherwise no action
 - manage_item(_itemInHand):
 makes the item follow mouse movement and angle, does not manage usage of item
 
@@ -51,3 +60,7 @@ checks for clicks on mouse and responds accordingly:
 		- elif player in reach
 			- pick item
 	- if right click **(to be implemented)**
+- keyboardInteractions():
+gets keyboards actions if control is given to the soul(i.e the player has the control), checks keys in keyboardInput global or combinations to perform actions
+
+> Implementation of all methods used are local to player, refer to code to understanding

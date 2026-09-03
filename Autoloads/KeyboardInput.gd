@@ -8,10 +8,13 @@ var PlayerRight : bool
 
 func _ready():
 	inputMap = {
+		#-----------------------
 		"PlayerUp" : PlayerUp,
 		"PlayerDown" : PlayerDown,
 		"PlayerLeft" : PlayerLeft,
-		"PlayerRight" : PlayerRight
+		"PlayerRight" : PlayerRight,
+		#-----------------------
+		"DropItem" : false
 	}
 
 func _process(_delta):
@@ -19,3 +22,6 @@ func _process(_delta):
 	inputMap["PlayerDown"] = Input.is_action_pressed("PlayerDown")
 	inputMap["PlayerLeft"] = Input.is_action_pressed("PlayerLeft")
 	inputMap["PlayerRight"] = Input.is_action_pressed("PlayerRight")
+	
+	inputMap["DropItem"] = Input.is_action_pressed("DropItem")
+	

@@ -9,4 +9,4 @@
 position = Vector2( 448, 256 )
 
 [node name="Area2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 760, 280 )
+position = Vector2( 704, 272 )

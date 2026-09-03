@@ -30,6 +30,7 @@ func _ready():
 	animationResetCooldown = false
 	self.z_index = int(self.global_position.y)
 	get_node(\"AnimationPlayer\").play(\"Iddle\")
+	get_node(\"damageArea\").disabled = true
 	
 	Globals[\"GlobalSignalsEmitter\"].connect(\"item_picked\",self,\"_on_item_picked\")
 	Globals[\"GlobalSignalsEmitter\"].connect(\"item_dropped\", self, \"_on_item_dropped\")

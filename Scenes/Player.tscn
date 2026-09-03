@@ -34,14 +34,13 @@ func _ready():
 	
 	itemInHand = null
 	
-	Globals[\"GlobalData\"].playerSoul.connect(\"player_use_item\",self,\"_on_soul_player_use_item\")
-	Globals[\"GlobalData\"].playerSoul.connect(\"player_pick_item\",self,\"_on_soul_player_pick_item\")
-	
+	Globals[\"GlobalData\"].playerSoul.connect(\"player_use_item\",self,\"_on_body_player_use_item\")
+	Globals[\"GlobalData\"].playerSoul.connect(\"player_pick_item\",self,\"_on_body_player_pick_item\")
+	Globals[\"GlobalData\"].playerSoul.connect(\"player_drop_item\",self,\"_on_body_player_drop_item\")
 
 func _process(delta):
 	movement(delta)
 	manage_item()
-	
 
 func movement(delta):
 	if(Globals[\"GlobalData\"].playerSoul.control == true):
@@ -57,10 +56,10 @@ func movement(delta):
 		move_and_slide(velocVector.normalized() * velocity * delta)
 		self.z_index = int(self.global_position.y)
 
-func _on_soul_player_use_item():
+func _on_body_player_use_item():
 	itemInHand.activateItem()
 
-func _on_soul_player_pick_item(_nodeUnderMouse):
+func _on_body_player_pick_item(_nodeUnderMouse):
 	if(_nodeUnderMouse != null):
 		if(_nodeUnderMouse.input_pickable):
 			Globals[\"GlobalData\"].world.remove_child(_nodeUnderMouse)
@@ -68,6 +67,21 @@ func _on_soul_player_pick_item(_nodeUnderMouse):
 			itemInHand = _nodeUnderMouse
 			holdingItem = true
 			Globals[\"GlobalSignalsEmitter\"].emit_signal(\"item_picked\", _nodeUnderMouse.get_instance_id())
+
+func _on_body_player_drop_item():
+	if(holdingItem):
+		var aux
+		if(cos(itemInHand.rotation_degrees * (PI/180)) >= 0):
+			aux = 1
+			itemInHand.rotation_degrees = 0
+		else:
+			aux = -1
+			itemInHand.rotation_degrees = 180
+		itemInHand.position = get_node(\"worldCollision\").global_position + Vector2(150 * aux,0)
+		self.remove_child(itemInHand)
+		Globals[\"GlobalData\"].world.add_child(itemInHand)
+		holdingItem = false
+		itemInHand = null
 
 func manage_item():
 	if(holdingItem):
@@ -105,6 +119,7 @@ var nodeUnderMouse
 
 signal player_use_item
 signal player_pick_item
+signal player_drop_item
 
 func _ready():
 	#AUTOLOAD GLOBALS INITIALIZED
@@ -128,6 +143,7 @@ func _ready():
 func _process(_delta):
 	getMouseVars()
 	mouseInteractions()
+	keyboardInteractions()
 
 
 func getMouseVars():
@@ -155,6 +171,10 @@ func mouseInteractions():
 		pass
 	else:
 		pass
+
+func keyboardInteractions():
+	if(Globals[\"KeyboardInput\"].inputMap[\"DropItem\"]):
+		emit_signal(\"player_drop_item\")
 
 func _on_soul_mouse_over(_node):
 	nodeUnderMouse = _node
