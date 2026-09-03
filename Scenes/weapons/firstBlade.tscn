@@ -54,10 +54,12 @@ func activateItem():
 			attackAnimation = 0
 
 func _on_Area2D_mouse_entered():
-	Globals[\"GlobalSignalsEmitter\"].emit_signal(\"mouse_over\", self)
+	if(not isPicked):
+		Globals[\"GlobalSignalsEmitter\"].emit_signal(\"mouse_over\", self)
 
 func _on_Area2D_mouse_exited():
-	Globals[\"GlobalSignalsEmitter\"].emit_signal(\"mouse_exited\", self)
+	if(not isPicked):
+		Globals[\"GlobalSignalsEmitter\"].emit_signal(\"mouse_exited\", self)
 "
 
 [sub_resource type="RectangleShape2D" id=5]

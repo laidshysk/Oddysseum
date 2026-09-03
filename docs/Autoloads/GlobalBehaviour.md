@@ -2,6 +2,10 @@ Global functions to acces to behaviour rather globally
 
 ### Functions
 
+- initGlobals(node):
+Initializes the Globals in a given node via its Globals dictionary
+- insertOverlappingNode(overlappingNodes, node):
+inserts node into overlappingNodes array accordingly to its z_index value
 
 **Comment**
 

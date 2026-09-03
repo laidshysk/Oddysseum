@@ -49,9 +49,17 @@ its Responsibilities are:
 	- Get mouse variables and data to use
 	- Read interactions with the mouse in the world() be it detect items under mouse, clicks and actions, etc)
 
+**Variables:**
+control: gives player soul control of the body and allows interactions
+VectorPlayerMouse: vector2 from player body center to the mouse pointer
+inPlayerReach: flag, know if the mouse pointer is in reach for interaction with player
+leftClick/rightClick: flags, knows if the left/right click is pressed
+nodeUnderMouse: the top most node under mouse pointer
+overlappingNodes: array to hold the identity of all nodes under the mouse pointer ordered by its z_index values,  its always ordered from less z_index(less array index, more out back) to more z_index(more array index, more up front)
+
 In _ready execution of soul node, the Player soul node adds itself as GlobalData.playerSoul variable to be hold in global
 
-Methods:
+**Methods:**
 - getMouseVars():
 gets vector from player body node to mouse position and changes variable dependants
 - mouseInteractions():
@@ -64,5 +72,10 @@ checks for clicks on mouse and responds accordingly:
 	- if right click **(to be implemented)**
 - keyboardInteractions():
 gets keyboards actions if control is given to the soul(i.e the player has the control), checks keys in keyboardInput global or combinations to perform actions
+- _on_soul_mouse_over(node):
+reciever signal method for getting another node under the mouse pointer, append to the array of nodes under mouse pointer and set corresponding nodeUnderMouse variable
+- _on_soul_mouse_exited(node):
+reciever signal method for removing a node that is no longer under mouse pointer, removes from array of nodes under mouse and set corresponding nodeUnderMouse variable
+
 
 > Implementation of all methods used are local to player, refer to code to understanding

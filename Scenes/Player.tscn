@@ -21,7 +21,6 @@ func _ready():
 	#AUTOLOAD GLOBALS INITIALIZED
 	#--------------------------------
 	Globals[\"GlobalBehaviour\"] = GlobalBehaviour
-	print(Globals[\"GlobalBehaviour\"])
 	Globals[\"GlobalBehaviour\"].initGlobals(self)
 	#--------------------------------
 	
@@ -116,6 +115,7 @@ var inPlayerReach : bool
 var leftClick : bool
 var rightClick : bool
 var nodeUnderMouse
+var overlappingNodes : Array
 
 signal player_use_item
 signal player_pick_item
@@ -135,6 +135,7 @@ func _ready():
 	rightClick = false
 	vectorPlayerMouse = Vector2(0,0)
 	nodeUnderMouse = null
+	overlappingNodes = []
 	
 	Globals[\"GlobalSignalsEmitter\"].connect(\"mouse_over\", self, \"_on_soul_mouse_over\")
 	Globals[\"GlobalSignalsEmitter\"].connect(\"mouse_exited\", self, \"_on_soul_mouse_exited\")
@@ -155,38 +156,47 @@ func getMouseVars():
 		inPlayerReach = true
 	else:
 		inPlayerReach = false
-	
+
 func mouseInteractions():
 	leftClick = Input.is_action_just_pressed(\"PlayerMouseLeftClick\")
 	rightClick = Input.is_action_just_pressed(\"PlayerMouseRightClick\")
 	
-	if(leftClick):
-		if(Globals[\"GlobalData\"].player.holdingItem):
-			emit_signal(\"player_use_item\")
-		elif(inPlayerReach):
-			emit_signal(\"player_pick_item\", nodeUnderMouse)
+	if(control):
+		if(leftClick):
+			if(Globals[\"GlobalData\"].player.holdingItem):
+				emit_signal(\"player_use_item\")
+			elif(inPlayerReach):
+				emit_signal(\"player_pick_item\", nodeUnderMouse)
+			else:
+				pass
+		elif(rightClick):
+			pass
 		else:
 			pass
-	elif(rightClick):
-		pass
-	else:
-		pass
 
 func keyboardInteractions():
-	if(Globals[\"KeyboardInput\"].inputMap[\"DropItem\"]):
-		emit_signal(\"player_drop_item\")
+	if(control):
+		if(Globals[\"KeyboardInput\"].inputMap[\"DropItem\"]):
+			emit_signal(\"player_drop_item\")
 
-func _on_soul_mouse_over(_node):
-	nodeUnderMouse = _node
+func _on_soul_mouse_over(node):
+	Globals[\"GlobalBehaviour\"].insertOverlappingNode(overlappingNodes, node)
+	nodeUnderMouse = overlappingNodes.back()
+	print(overlappingNodes)
 
-func _on_soul_mouse_exited(_node):
-	nodeUnderMouse = null
+func _on_soul_mouse_exited(node):
+	overlappingNodes.erase(node)
+	if(overlappingNodes.size() != 0):
+		nodeUnderMouse = overlappingNodes.back()
+	else:
+		nodeUnderMouse = null
+	print(overlappingNodes)
 "
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 40, 88 )
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Entity", "Player"]]
 script = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
