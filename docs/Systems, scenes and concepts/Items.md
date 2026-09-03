@@ -12,8 +12,9 @@ Structure of an item:
 
 Or other way:
 
-> - Area2D
-> 	- Root node of item itself
+- Area2D
+	- Root node of item itself
+
 > the above way could be used as abstraction, convenience or generalization of an item.
 
 ### Properties:
