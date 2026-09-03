@@ -1,0 +1,183 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="GDScript" id=2]
+resource_name = "playerBody"
+script/source = "extends KinematicBody2D
+
+# FATHER PLAYER (BODY) SCRIPT
+
+#AUTOLOAD GLOBALS DECLARED
+#--------------------------------
+var Globals : Dictionary
+#--------------------------------
+
+var health : int
+var velocity : int
+var holdingItem : bool
+var distanceToHoldingItem : int
+var itemInHand
+
+func _ready():
+	#AUTOLOAD GLOBALS INITIALIZED
+	#--------------------------------
+	Globals[\"GlobalBehaviour\"] = GlobalBehaviour
+	print(Globals[\"GlobalBehaviour\"])
+	Globals[\"GlobalBehaviour\"].initGlobals(self)
+	#--------------------------------
+	
+	Globals[\"GlobalData\"].player = self
+	health = 3 # hits
+	velocity = 15000 # ?
+	holdingItem = false
+	distanceToHoldingItem = 125 # px
+	self.z_index = int(self.global_position.y)
+	
+	itemInHand = null
+	
+	Globals[\"GlobalData\"].playerSoul.connect(\"player_use_item\",self,\"_on_soul_player_use_item\")
+	Globals[\"GlobalData\"].playerSoul.connect(\"player_pick_item\",self,\"_on_soul_player_pick_item\")
+	
+
+func _process(delta):
+	movement(delta)
+	manage_item()
+	
+
+func movement(delta):
+	if(Globals[\"GlobalData\"].playerSoul.control == true):
+		var velocVector = Vector2(0,0)
+		if(Globals[\"KeyboardInput\"].inputMap[\"PlayerUp\"]):
+			velocVector.y += -1
+		if(Globals[\"KeyboardInput\"].inputMap[\"PlayerDown\"]):
+			velocVector.y += 1
+		if(Globals[\"KeyboardInput\"].inputMap[\"PlayerLeft\"]):
+			velocVector.x += -1
+		if(Globals[\"KeyboardInput\"].inputMap[\"PlayerRight\"]):
+			velocVector.x += 1
+		move_and_slide(velocVector.normalized() * velocity * delta)
+		self.z_index = int(self.global_position.y)
+
+func _on_soul_player_use_item():
+	itemInHand.activateItem()
+
+func _on_soul_player_pick_item(_nodeUnderMouse):
+	if(_nodeUnderMouse != null):
+		if(_nodeUnderMouse.input_pickable):
+			Globals[\"GlobalData\"].world.remove_child(_nodeUnderMouse)
+			self.add_child(_nodeUnderMouse)
+			itemInHand = _nodeUnderMouse
+			holdingItem = true
+			Globals[\"GlobalSignalsEmitter\"].emit_signal(\"item_picked\", _nodeUnderMouse.get_instance_id())
+
+func manage_item():
+	if(holdingItem):
+		itemInHand.position = Vector2(0,0) + (Globals[\"GlobalData\"].playerSoul.vectorPlayerMouse.normalized() * distanceToHoldingItem)
+		itemInHand.rotation_degrees = Globals[\"GlobalData\"].playerSoul.vectorPlayerMouse.angle() * (180/PI)
+
+
+
+
+"
+
+[sub_resource type="StreamTexture" id=4]
+flags = 4
+load_path = "res://.import/PlayerSpr.png-f0ae206d3eaf21036cc31882c5881cf4.stex"
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 13 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Node2D
+
+# NODE SOUL SCRIPT
+
+#AUTOLOAD GLOBALS DECLARED
+#--------------------------------
+var Globals : Dictionary
+#--------------------------------
+
+var control : bool
+var vectorPlayerMouse : Vector2
+var inPlayerReach : bool
+var leftClick : bool
+var rightClick : bool
+var nodeUnderMouse
+
+signal player_use_item
+signal player_pick_item
+
+func _ready():
+	#AUTOLOAD GLOBALS INITIALIZED
+	#--------------------------------
+	Globals[\"GlobalBehaviour\"] = GlobalBehaviour
+	Globals[\"GlobalBehaviour\"].initGlobals(self)
+	#--------------------------------
+	
+	Globals[\"GlobalData\"].playerSoul = self
+	control = Globals[\"GlobalControl\"].playerInputControl
+	inPlayerReach = false
+	leftClick = false
+	rightClick = false
+	vectorPlayerMouse = Vector2(0,0)
+	nodeUnderMouse = null
+	
+	Globals[\"GlobalSignalsEmitter\"].connect(\"mouse_over\", self, \"_on_soul_mouse_over\")
+	Globals[\"GlobalSignalsEmitter\"].connect(\"mouse_exited\", self, \"_on_soul_mouse_exited\")
+	
+
+func _process(_delta):
+	getMouseVars()
+	mouseInteractions()
+
+
+func getMouseVars():
+	vectorPlayerMouse = Vector2(
+		get_global_mouse_position().x - self.global_position.x,
+		get_global_mouse_position().y - self.global_position.y)
+	
+	if(vectorPlayerMouse.length() <= 300):
+		inPlayerReach = true
+	else:
+		inPlayerReach = false
+	
+func mouseInteractions():
+	leftClick = Input.is_action_just_pressed(\"PlayerMouseLeftClick\")
+	rightClick = Input.is_action_just_pressed(\"PlayerMouseRightClick\")
+	
+	if(leftClick):
+		if(Globals[\"GlobalData\"].player.holdingItem):
+			emit_signal(\"player_use_item\")
+		elif(inPlayerReach):
+			emit_signal(\"player_pick_item\", nodeUnderMouse)
+		else:
+			pass
+	elif(rightClick):
+		pass
+	else:
+		pass
+
+func _on_soul_mouse_over(_node):
+	nodeUnderMouse = _node
+
+func _on_soul_mouse_exited(_node):
+	nodeUnderMouse = null
+"
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 40, 88 )
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+script = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = SubResource( 4 )
+
+[node name="worldCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 77 )
+shape = SubResource( 1 )
+
+[node name="soul" type="Node2D" parent="."]
+script = SubResource( 5 )
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource( 6 )
