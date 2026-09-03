@@ -1,19 +1,20 @@
 First weapon the player recieves
 Simple sword that attacks fast
 
+Description: the sword knows when its picked, dropped, hovered over or exited over itself and can be activated throught the player body.
+
 ## Properties
 
-Groups: Item, Weapon, Melee
-
+Properties: damage, isPicked, attackAnimation, animationResetCooldown
 damage : damage
-isPicked
+isPicked : bool variable to know if the item is picked
 attackAnimation : the current playing/last played attack animation for memory
 animationResetCooldown : cooldown flag to reset animation to iddle position
 
-It has animations that enables and disables the damage shapes to produce contact at the usage time of the item.
+Groups: Item, Weapon, Melee
 
+It has animations that enables and disables the damage shapes to produce contact at the usage time of the item.
 Behaviour in integrated script inside father node Area2D
-Description: the sword knows when its picked, dropped, hovered over or exited over itself.
 
 ## Methods
 
