@@ -35,12 +35,13 @@ func _ready():
 	Globals[\"GlobalSignalsEmitter\"].connect(\"item_picked\",self,\"_on_item_picked\")
 	Globals[\"GlobalSignalsEmitter\"].connect(\"item_dropped\", self, \"_on_item_dropped\")
 
-func _on_item_picked(_instance_id):
-	if(_instance_id == self.get_instance_id()):
+func _on_item_picked(instance_id):
+	if(instance_id == self.get_instance_id()):
 		isPicked = true
 
-func _on_item_dropped():
-	pass
+func _on_item_dropped(instance_id):
+	if((instance_id == self.get_instance_id()) and isPicked):
+		isPicked = false
 
 func activateItem():
 	if(not animationResetCooldown):
@@ -206,12 +207,14 @@ position = Vector2( 77.6, -0.000167847 )
 texture = ExtResource( 2 )
 
 [node name="damageArea" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2( 77.6, -0.000167847 )
 rotation = 1.57079
 build_mode = 1
 polygon = PoolVector2Array( 0, 80, -112, -32, -64, -72, 0, -88, 64, -72, 120, -32 )
 
 [node name="interactionShape" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 77.6, -0.000167847 )
 shape = SubResource( 5 )
 

@@ -79,6 +79,7 @@ func _on_body_player_drop_item():
 		itemInHand.position = get_node(\"worldCollision\").global_position + Vector2(150 * aux,0)
 		self.remove_child(itemInHand)
 		Globals[\"GlobalData\"].world.add_child(itemInHand)
+		Globals[\"GlobalSignalsEmitter\"].emit_signal(\"item_dropped\", itemInHand.get_instance_id())
 		holdingItem = false
 		itemInHand = null
 
@@ -167,6 +168,11 @@ func mouseInteractions():
 				emit_signal(\"player_use_item\")
 			elif(inPlayerReach):
 				emit_signal(\"player_pick_item\", nodeUnderMouse)
+				overlappingNodes.pop_back()
+				if(overlappingNodes.size() == 0):
+					nodeUnderMouse = null
+				else:
+					nodeUnderMouse = overlappingNodes.back()
 			else:
 				pass
 		elif(rightClick):

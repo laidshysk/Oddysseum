@@ -25,3 +25,6 @@ It follows the next sequence of steps:
 
 If a click event is pressed before animation completes (timer reaches 0), activate again
 If timer reaches 0, sets flag to resetCooldown true, then on timer's timeout() signal method plays animation to iddle accordingly then yields creates timer to wait the length of the idle animation, then sets flag to false again and the item can be used again.
+
+- mouse_entered/exited():
+reciever signal methods for emitting mouse over signal throught GlobalSignalEmitter

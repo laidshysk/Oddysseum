@@ -17,12 +17,13 @@ func initGlobals(node):
 
 func insertOverlappingNode(overlappingNodes, node):
 	var escapeFlag = false
-	var iterator = 1
+	var iterator = 0
 	while(not escapeFlag):
-		if(iterator < (overlappingNodes.size()) + 1):
+		if(iterator < (overlappingNodes.size())):
 			if(overlappingNodes[iterator].z_index > node.z_index):
-				overlappingNodes.insert(iterator - 1, node)
+				overlappingNodes.insert(iterator, node)
 				escapeFlag = true
 		else:
 			overlappingNodes.append(node)
 			escapeFlag = true
+		iterator += 1
