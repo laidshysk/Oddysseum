@@ -20,7 +20,7 @@ Or other way:
 ### Properties:
 An item has these base properties:
 
-	- Type/Kind (or grouping)
+	- Type/Kind (via grouping, can be multiple types)
 	- isPicked
 
 

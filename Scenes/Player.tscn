@@ -188,18 +188,16 @@ func keyboardInteractions():
 func _on_soul_mouse_over(node):
 	Globals[\"GlobalBehaviour\"].insertOverlappingNode(overlappingNodes, node)
 	nodeUnderMouse = overlappingNodes.back()
-	print(overlappingNodes)
 
 func _on_soul_mouse_exited(node):
 	overlappingNodes.erase(node)
-	if(overlappingNodes.size() != 0):
+	if(overlappingNodes.size() > 0):
 		nodeUnderMouse = overlappingNodes.back()
 	else:
 		nodeUnderMouse = null
-	print(overlappingNodes)
 "
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 40, 88 )
 
 [node name="Player" type="KinematicBody2D" groups=["Entity", "Player"]]
@@ -215,5 +213,12 @@ shape = SubResource( 1 )
 [node name="soul" type="Node2D" parent="."]
 script = SubResource( 5 )
 
-[node name="hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource( 6 )
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+
+[node name="hitbox" type="Area2D" parent="."]
+input_pickable = false
+
+[node name="hitboxShape" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource( 7 )
