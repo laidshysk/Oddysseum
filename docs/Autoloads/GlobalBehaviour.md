@@ -1,11 +1,20 @@
-Global functions to acces to behaviour rather globally
+Global functions/signals to access globally
 
-### Functions
+### Signals
+mouse_over : signal emitted by every scene for telling the player(soul) that mouse pointer is over them
+mouse_exited : exit signal for mouse_over
+
+comments:
+>all signals are emitted on _ready execution of this Global with null as parameters just to comply with godot's warnings
+
+### Methods
 
 - initGlobals(node):
 Initializes the Globals in a given node via its Globals dictionary
 - insertOverlappingNode(overlappingNodes, node):
 inserts node into overlappingNodes array accordingly to its z_index value
+- initPlayer(playerPart):
+initializes the Global usage elements of the entity player by separate, the soul or the body.
 
 **Comment**
 

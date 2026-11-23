@@ -31,16 +31,11 @@ func _ready():
 	self.z_index = int(self.global_position.y)
 	get_node(\"AnimationPlayer\").play(\"Iddle\")
 	get_node(\"damageArea\").disabled = true
-	
-	Globals[\"GlobalSignalsEmitter\"].connect(\"item_picked\",self,\"_on_item_picked\")
-	Globals[\"GlobalSignalsEmitter\"].connect(\"item_dropped\", self, \"_on_item_dropped\")
 
-func _on_item_picked(instance_id):
-	if(instance_id == self.get_instance_id()):
+func pickedSwitch():
+	if(not isPicked):
 		isPicked = true
-
-func _on_item_dropped(instance_id):
-	if((instance_id == self.get_instance_id()) and isPicked):
+	elif(isPicked):
 		isPicked = false
 
 func activateItem():
@@ -56,11 +51,11 @@ func activateItem():
 
 func _on_Area2D_mouse_entered():
 	if(not isPicked):
-		Globals[\"GlobalSignalsEmitter\"].emit_signal(\"mouse_over\", self)
+		Globals[\"GlobalBehaviour\"].emit_signal(\"mouse_over\", self)
 
 func _on_Area2D_mouse_exited():
 	if(not isPicked):
-		Globals[\"GlobalSignalsEmitter\"].emit_signal(\"mouse_exited\", self)
+		Globals[\"GlobalBehaviour\"].emit_signal(\"mouse_exited\", self)
 "
 
 [sub_resource type="RectangleShape2D" id=5]
@@ -191,6 +186,7 @@ func _on_Timer_timeout():
 "
 
 [node name="Area2D" type="Area2D" groups=["Item", "Melee", "Weapon"]]
+z_as_relative = false
 script = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true

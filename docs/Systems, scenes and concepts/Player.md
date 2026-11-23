@@ -26,7 +26,8 @@ its Responsibilities are:
 	- Move itself throught the world (movement())
 	- pick/drop items (pick_item/drop_item)
 	- use items (activateItem)
-	- manage its holding item (manage_item)
+	- manage its holding item (hold_item)
+	- manage its health
 
 In _ready execution of Body node, the Player body node adds itself as GlobalData.player variable to be hold in global
 
@@ -39,8 +40,9 @@ takes the item selected throught _nodeUnderMouse, removes it from tree scene, ad
 calls the activateItem function of the holding item
 - _on_body_player_drop_item():
 if holding an item, it drops it, otherwise no action
-- manage_item(_itemInHand):
+- hold_item(_itemInHand):
 makes the item follow mouse movement and angle, does not manage item activation
+-
 
 ### Soul
 
@@ -50,7 +52,7 @@ its Responsibilities are:
 	- Read interactions with the mouse in the world() be it detect items under mouse, clicks and actions, etc)
 
 **Variables:**
-control: gives player soul control of the body and allows interactions
+playerInputControl(Global): bool to check if the soul can control the body
 VectorPlayerMouse: vector2 from player body center to the mouse pointer
 inPlayerReach: flag, know if the mouse pointer is in reach for interaction with player
 leftClick/rightClick: flags, knows if the left/right click is pressed

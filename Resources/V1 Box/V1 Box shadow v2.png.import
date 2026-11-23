@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/PlayerSpr.png-3ba247ad2b5ae502a54bae5a3e1eae06.stex"
+path="res://.import/V1 Box shadow v2.png-c3f9b802427f88376ec03aed3baff82f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Characters/PlayerSpr.png"
-dest_files=[ "res://.import/PlayerSpr.png-3ba247ad2b5ae502a54bae5a3e1eae06.stex" ]
+source_file="res://Resources/V1 Box/V1 Box shadow v2.png"
+dest_files=[ "res://.import/V1 Box shadow v2.png-c3f9b802427f88376ec03aed3baff82f.stex" ]
 
 [params]
 

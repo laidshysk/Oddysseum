@@ -8,6 +8,7 @@ var PlayerRight : bool
 
 func _ready():
 	inputMap = {
+		#player movement inputMap
 		#-----------------------
 		"PlayerUp" : PlayerUp,
 		"PlayerDown" : PlayerDown,

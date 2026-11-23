@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/V1 Box Ground door.png-0880206d6df3834ed3b4666631c2eeff.stex"
+path="res://.import/background.png-fb3e9807f331d83e045cc78951ff8bb5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/V1 Box/V1 Box Ground door.png"
-dest_files=[ "res://.import/V1 Box Ground door.png-0880206d6df3834ed3b4666631c2eeff.stex" ]
+source_file="res://Resources/V1 Box/background.png"
+dest_files=[ "res://.import/background.png-fb3e9807f331d83e045cc78951ff8bb5.stex" ]
 
 [params]
 

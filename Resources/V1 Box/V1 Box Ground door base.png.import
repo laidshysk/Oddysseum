@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/PlayerSpr.png-ff0d01cf2611e40dc04c686dd9e0d87d.stex"
+path="res://.import/V1 Box Ground door base.png-4d13e6fc85a9464f5fddad50ccbe0f0a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/PlayerSpr.png"
-dest_files=[ "res://.import/PlayerSpr.png-ff0d01cf2611e40dc04c686dd9e0d87d.stex" ]
+source_file="res://Resources/V1 Box/V1 Box Ground door base.png"
+dest_files=[ "res://.import/V1 Box Ground door base.png-4d13e6fc85a9464f5fddad50ccbe0f0a.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

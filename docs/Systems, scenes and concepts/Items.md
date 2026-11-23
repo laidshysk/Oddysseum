@@ -27,11 +27,10 @@ An item has these base properties:
 ### Behaviours
 An item has these base behaviours:
 
-	- _on_item_picked
-	- _on_item_dropped
+	- pickedSwitch()
 	- activateItem()
 
-_on_item_picked/dropped : activation signal functions for dealing with control variables if item is picked
+pickedSwitch() : activation function for dealing with control variables if item is picked/dropped
 
 activateItem() : item performs required action, during which it cannot start use again until current use finishes. Use, finish use, can use again.
 

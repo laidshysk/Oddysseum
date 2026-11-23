@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/V1 Box Ground.png-31802189eb3428be2cbdb8cb442b49dd.stex"
+path="res://.import/light.png-d475ce030613bccc252be188397ffce0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/V1 Box/V1 Box Ground.png"
-dest_files=[ "res://.import/V1 Box Ground.png-31802189eb3428be2cbdb8cb442b49dd.stex" ]
+source_file="res://Resources/V1 Box/light.png"
+dest_files=[ "res://.import/light.png-d475ce030613bccc252be188397ffce0.stex" ]
 
 [params]
 
