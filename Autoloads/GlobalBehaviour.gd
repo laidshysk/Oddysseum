@@ -5,17 +5,23 @@ extends Node
 signal mouse_over		# 1 argument, the node
 signal mouse_exited		# 1 argument, the node
 signal hit_player		# 0 arguments
+signal enemy_hit		# 1 argument
 #----------------------
 
 func _ready():
+	#all signals emitted at launch
+	#--------------
 	emit_signal("mouse_over", null)
 	emit_signal("mouse_exited", null)
 	emit_signal("hit_player")
+	emit_signal("enemy_hit", null)
+	#--------------
 
 func initGlobals(node):
 	#GLOBALS NAMES IN NODES (keys)
 	#	GlobalData
 	#	GlobalBehaviour
+	node.Globals["GlobalBehaviour"] = GlobalBehaviour
 	node.Globals["GlobalData"] = GlobalData
 
 func initPlayer(playerPart):

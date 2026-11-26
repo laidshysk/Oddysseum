@@ -3,6 +3,8 @@ Global functions/signals to access globally
 ### Signals
 mouse_over : signal emitted by every scene for telling the player(soul) that mouse pointer is over them
 mouse_exited : exit signal for mouse_over
+hit_player : *to be implemented*
+enemy_hit : signal to emit by an enemy for telling to every object that it hit something, sending the array of objects with the signal
 
 comments:
 >all signals are emitted on _ready execution of this Global with null as parameters just to comply with godot's warnings

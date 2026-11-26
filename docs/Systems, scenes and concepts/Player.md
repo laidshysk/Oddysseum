@@ -15,6 +15,10 @@ Signals:
 
 Groups : Entity, Player
 
+The Player has a
+	hitbox collision shape : the hitbox of the player, child of the player root node, this collisionObject2D is in layer 10, it doesn't scan on any mask
+	world collision shape : the collision box of the player to move around the world and collision with walls or other world collision shapes of other things, this collisionObject2D is in layer 1, it scans on mask 1
+
 ## Player parts and responsibilities
 
 ### Body
